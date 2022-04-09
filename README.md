@@ -7,11 +7,11 @@ Home Assistent integration to fetch the (2h) precipitation forecast from Buienra
 
 Install as a custom integration using HACS [(see this guide)](https://hacs.xyz/docs/faq/custom_repositoriess).
 
-Manual install:
+Or apply a manual install:
 1. Using your tool of choice open the folder for your HA configuration (where you find `configuration.yaml`).
 2. If you do not have a `custom_components` folder there, you need to create it first.
 3. In the `custom_components` folder create a new folder called `buienradar_precipitation_forecast`.
-4. Download _all_ the files from the `custom_components/buienradar_precipitation_forecast/` directory (folder) from this repository.
+4. Download _all_ the files from `custom_components/buienradar_precipitation_forecast/` in this repository.
 5. Place _all_ the files you downloaded in the new directory (folder) you created.
 6. Restart Home Assistant.
 6. See `Example Configuration` section for further configuration.
