@@ -5,7 +5,7 @@ Home Assistent integration to fetch the (2h) precipitation forecast from Buienra
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
 
-Install using HACS or [see this guide](https://github.com/thomasloven/hass-config/wiki/Lovelace-Plugins) (by Thomas Lovén).
+Install as a custom integration using HACS [see this guide](https://hacs.xyz/docs/faq/custom_repositoriess).
 
 ## Quick Start
 Add the following to your configuration.yaml file and restart Home Assistant:
