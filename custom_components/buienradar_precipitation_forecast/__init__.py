@@ -1,0 +1,1 @@
+"""Buienradar Daily Forecast integration"""

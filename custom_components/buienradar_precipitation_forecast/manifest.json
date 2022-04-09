@@ -1,0 +1,11 @@
+{
+  "domain": "buienradar_precipitation_forecast",
+  "name": "Buienradar Precipitation Forecast",
+  "version": "2022.04.08",
+  "iot_class": "cloud_polling",
+  "documentation": "https://github.com/DennisB66/HA-Buienradar-Precipitation-Forecast",
+  "issue_tracker": "https://github.com/DennisB66/HA-Buienradar-Precipitation-Forecast/issues",
+  "codeowners": ["@DennisB66"],
+  "dependencies": [],
+  "requirements": []
+}

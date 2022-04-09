@@ -1,0 +1,6 @@
+{
+  "name": "buienradar_precipitation_forecast",
+  "content_in_root": false,
+  "render_readme": true,
+  "country": ["NL"]
+}
