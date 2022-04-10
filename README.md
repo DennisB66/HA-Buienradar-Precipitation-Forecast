@@ -6,7 +6,11 @@ Home Assistent integration to fetch the (2h) precipitation forecast from Buienra
 ## Installation
 Install as a custom integration using HACS [(see this guide)](https://hacs.xyz/docs/faq/custom_repositoriess).
 
-For a manual install copy the `Buienradar-Precipitation-Forecast` directory from the [latest release](https://github.com/DennisB66/HA-Buienradar-Precipitation-Forecast/releases/) into your /config/custom_components directory and restart HA.
+For a manual install:
+- download the integration from the [latest release](https://github.com/DennisB66/HA-Buienradar-Precipitation-Forecast/releases/).
+- copy the `Buienradar-Precipitation-Forecast` directory into your /config/custom_components directory.
+- restart HA.
+
 
 In your HA installation you should now also have this:
 ```text
@@ -15,7 +19,7 @@ custom_components/buienradar_precipitation_forecast/manifest.json
 custom_components/buienradar_precipitation_forecast/sensor.py
 ```
 
-## Example Configuration
+## Configuration
 Add the following to your configuration.yaml file and restart Home Assistant:
 ```yaml
 sensor:
@@ -24,7 +28,7 @@ sensor:
     longitude: 3.000  # replace with your coordinate
 ```
 
-## Sensor Configuration
+## Sensor Parameters
 | Option          | Values         | Description                                                   | default  |
 | --------------- | -------------- | ------------------------------------------------------------- | -------- |
 | `latitude`      | number         | Latitude coordinate of the forecast requested                 |  51.00   |
