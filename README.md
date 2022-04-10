@@ -12,16 +12,17 @@ Install as a custom integration using HACS [(see this guide)](https://hacs.xyz/d
 <ol>
 <li>Download the [latest release](https://github.com/DennisB66/HA-Buienradar-Precipitation-Forecast) as a zip file and extract it into the `custom_components` folder in your HA installation.</li>
 <li>Restart HA to load the integration into HA.</li>
-<li>Go to Configuration -> Integrations and click the big '+' button, look for `Buienradar-Precipitation-Forecast` and click to add it.</li>
+<li>In Configuration -> Integrations and add the integration using the '+' button.</li>
 <li>The integration is ready for use.</li>
 </ol>
-</details>
+
 In your HA installation you should now also have this:
 ```text
 custom_components/buienradar_precipitation_forecast/__init__.py
 custom_components/buienradar_precipitation_forecast/manifest.json
 custom_components/buienradar_precipitation_forecast/sensor.py
 ```
+</details>
 
 ## Example Configuration
 Add the following to your configuration.yaml file and restart Home Assistant:
