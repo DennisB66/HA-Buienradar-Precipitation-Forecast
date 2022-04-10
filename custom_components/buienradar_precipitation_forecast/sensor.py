@@ -1,8 +1,9 @@
 # Buienradar Precipitation Forecast sensor integration
 
-import logging
-import requests
 import voluptuous as vol
+import requests
+import logging
+
 from datetime import datetime, timedelta
 
 from homeassistant.components.sensor import PLATFORM_SCHEMA
@@ -23,12 +24,7 @@ MIN_TIME_BETWEEN_UPDATES = timedelta(minutes=5)
 
 DEFAULT_NAME = "Buienradar Precipitation Forecast"
 
-# CONF_LAT = 'latitude'
-# CONF_LON = 'longitude'
-CONF_URL = 'url'
-
-# ATTR_LAT  = 'latitude'
-# ATTR_LON  = 'longitude'
+CONF_URL  = 'url'
 ATTR_DATA = 'forecast'
 
 # ----------
