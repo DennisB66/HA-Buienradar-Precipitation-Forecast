@@ -1,15 +1,20 @@
 # Buienradar Precipitation Forecast sensor integration
 
-import logging
-from datetime import datetime
-from datetime import timedelta
-import random
-import requests
 import voluptuous as vol
+import requests
+import logging
+
+from datetime import datetime, timedelta
 
 from homeassistant.components.sensor import PLATFORM_SCHEMA
-import homeassistant.helpers.config_validation as cv
-from homeassistant.const import (CONF_RESOURCES)
+from homeassistant.const import (
+    CONF_NAME,
+    CONF_LATITUDE,
+    CONF_LONGITUDE,
+)
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers import config_validation as cv
+from homeassistant.helpers.typing import ConfigType
 from homeassistant.util import Throttle
 from homeassistant.helpers.entity import Entity
 
@@ -17,31 +22,44 @@ _LOGGER = logging.getLogger(__name__)
 
 MIN_TIME_BETWEEN_UPDATES = timedelta(minutes=5)
 
-CONF_LAT = 'latitude'
-CONF_LON = 'longitude'
-CONF_URL = 'url'
+DEFAULT_NAME = "Buienradar Precipitation Forecast"
 
-ATTR_LAT  = 'latitude'
-ATTR_LON  = 'longitude'
+CONF_URL  = 'url'
 ATTR_DATA = 'forecast'
 
+# ----------
+
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
-    vol.Required(CONF_LAT, default='51.0'): cv.string,
-    vol.Required(CONF_LON, default='3.00'): cv.string,
-    vol.Required(CONF_URL, default='https://gpsgadget.buienradar.nl/data/raintext?lat=%s&lon=%s'): cv.string,
+    vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
+
+    vol.Inclusive(CONF_LATITUDE , "coordinates", "Latitude and longitude must exist together"): cv.latitude,
+    vol.Inclusive(CONF_LONGITUDE, "coordinates", "Latitude and longitude must exist together"): cv.longitude,
+
+    vol.Optional(CONF_URL, default='https://gpsgadget.buienradar.nl/data/raintext?lat=%s&lon=%s'): cv.string,
 })
 
-def setup_platform(hass, config, add_entities, discovery_info=None):
+def setup_platform(hass: HomeAssistant, config: ConfigType, add_entities, discovery_info=None):
     _LOGGER.debug('Setting up')
-    lat = config.get(CONF_LAT)
-    lon = config.get(CONF_LON)
-    add_entities([RainForecastSensor(lat,lon)])
+    fname = config.get(CONF_NAME)
+    lat   = config.get(CONF_LATITUDE )
+    lon   = config.get(CONF_LONGITUDE)
+
+    if None in (lat, lon):
+      lat = config.get(CONF_LATITUDE , hass.config.latitude)
+      lon = config.get(CONF_LONGITUDE, hass.config.longitude)
+
+    if None in (lat, lon):
+        _LOGGER.error("Latitude or longitude not set in HomeAssistant config")
+        return
+
+    add_entities([RainForecastSensor(fname, lat,lon)])
 
 # ----------
 
 class RainForecastSensor(Entity):
 
-    def __init__(self, lat, lon):
+    def __init__(self, fname, lat, lon):
+        self._name = fname
         self._lat = lat
         self._lon = lon
         self._url = "https://gpsgadget.buienradar.nl/data/raintext?lat=%s&lon=%s"
@@ -71,9 +89,11 @@ class RainForecastSensor(Entity):
     @property
     def extra_state_attributes(self):
         return {
-            ATTR_LAT : self._lat,
-            ATTR_LON : self._lon,
-            ATTR_DATA: self._data
+            CONF_NAME      : self._name,
+            CONF_LATITUDE  : self._lat,
+            CONF_LONGITUDE : self._lon,
+            CONF_URL       : self._url,
+            ATTR_DATA      : self._data
         }
 
     @property
@@ -114,4 +134,3 @@ class RainForecastSensor(Entity):
             _LOGGER.error('Error %r', exc)
             self._data = []
             return False
-
