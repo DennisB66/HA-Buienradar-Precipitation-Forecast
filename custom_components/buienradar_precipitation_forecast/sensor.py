@@ -35,6 +35,16 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     _LOGGER.debug('Setting up')
     lat = config.get(CONF_LAT)
     lon = config.get(CONF_LON)
+
+    if None in (lat, lon):
+      lat = config.get(CONF_LATITUDE, hass.config.latitude)
+      lon = config.get(CONF_LONGITUDE, hass.config.longitude)
+    # timeframe = timedelta(minutes=config[CONF_TIMEFRAME])
+
+    if None in (lat, lon):
+        _LOGGER.error("Latitude or longitude not set in HomeAssistant config")
+        return
+
     add_entities([RainForecastSensor(lat,lon)])
 
 # ----------
