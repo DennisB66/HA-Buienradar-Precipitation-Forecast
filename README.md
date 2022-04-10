@@ -1,20 +1,12 @@
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
+
 ## HA-Buienradar-Precipitation-Forecast
 Home Assistent integration to fetch the (2h) precipitation forecast from Buienradar (NL).
 
 ## Installation
-
-[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
-
 Install as a custom integration using HACS [(see this guide)](https://hacs.xyz/docs/faq/custom_repositoriess).
 
-<details>
-<summary>Click to show manual installation instructions</summary>
-<ol>
-<li>Download the [latest release](https://github.com/DennisB66/HA-Buienradar-Precipitation-Forecast) as a zip file and extract it into the `custom_components` folder in your HA installation.</li>
-<li>Restart HA to load the integration into HA.</li>
-<li>In Configuration -> Integrations and add the integration using the '+' button.</li>
-<li>The integration is ready for use.</li>
-</ol>
+For a manual install copy the `Buienradar-Precipitation-Forecast` directory from the [latest release](https://github.com/DennisB66/HA-Buienradar-Precipitation-Forecast/releases/) into your /config/custom_components directory and restart HA.
 
 In your HA installation you should now also have this:
 ```text
@@ -22,7 +14,6 @@ custom_components/buienradar_precipitation_forecast/__init__.py
 custom_components/buienradar_precipitation_forecast/manifest.json
 custom_components/buienradar_precipitation_forecast/sensor.py
 ```
-</details>
 
 ## Example Configuration
 Add the following to your configuration.yaml file and restart Home Assistant:
