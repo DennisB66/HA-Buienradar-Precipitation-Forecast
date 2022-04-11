@@ -12,7 +12,7 @@ For a manual install:
 - restart HA.
 
 
-In your HA installation you should now also have this:
+In your HA installation the following should exist:
 ```text
 custom_components/buienradar_precipitation_forecast/__init__.py
 custom_components/buienradar_precipitation_forecast/manifest.json
@@ -24,15 +24,15 @@ Add the following to your configuration.yaml file and restart Home Assistant:
 ```yaml
 sensor:
   - platform: buienradar_precipitation_forecast
-    latitude: 51.000  # replace with your coordinate
-    longitude: 3.000  # replace with your coordinate
 ```
 
 ## Sensor Parameters
-| Option          | Values         | Description                                                   | default  |
-| --------------- | -------------- | ------------------------------------------------------------- | -------- |
-| `latitude`      | number         | Latitude coordinate of the forecast requested                 |  51.00   |
-| `longitude`     | number         | Longitude coordinate of the forecast requested                |  3.000   |
+| Optional        | Values         | Description                                                   |
+| --------------- | -------------- | ------------------------------------------------------------- |
+| `latitude`      | number         | Latitude coordinate of the forecast requested                 |
+| `longitude`     | number         | Longitude coordinate of the forecast requested                |
+
+Note: the default values for latitude and longitude, if not provided, are taken from the Home Assistant settings.
 
 ## Sensor Attributes
 | Attribute       | Values         | Description                                                   |
@@ -41,7 +41,7 @@ sensor:
 | `forecast`      | json array     | Expected Precipitation (in mm) for every 5 minutes            |
 
 ## Example of usage
-The forecart can be visualized using the [`custom:apexcharts-card`](https://github.com/RomRider/apexcharts-card):
+The forecast can be visualized using the [`custom:apexcharts-card`](https://github.com/RomRider/apexcharts-card):
 
 ![apexcharts-card](https://raw.githubusercontent.com/DennisB66/HA-Buienradar-Precipitation-Forecast/main/media/apexcharts-card.png)
 
