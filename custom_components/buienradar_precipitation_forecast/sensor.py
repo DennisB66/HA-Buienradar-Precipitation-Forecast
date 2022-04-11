@@ -1,28 +1,27 @@
 # Buienradar Precipitation Forecast sensor integration
 
+import asyncio
+import aiohttp
 import voluptuous as vol
-import requests
 import logging
 
 from datetime import datetime, timedelta
 
 from homeassistant.components.sensor import PLATFORM_SCHEMA
-from homeassistant.const import (
-    CONF_NAME,
-    CONF_LATITUDE,
-    CONF_LONGITUDE,
-)
+from homeassistant.const import ( CONF_NAME, CONF_LATITUDE, CONF_LONGITUDE )
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import config_validation as cv
-from homeassistant.helpers.typing import ConfigType
-from homeassistant.util import Throttle
 from homeassistant.helpers.entity import Entity
+from homeassistant.helpers.typing import ConfigType
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.helpers.discovery import async_load_platform
 
 _LOGGER = logging.getLogger(__name__)
 
-MIN_TIME_BETWEEN_UPDATES = timedelta(minutes=5)
+DEFAULT_SCAN_INTERVAL = timedelta(minutes=5)
 
-DEFAULT_NAME = "Buienradar Precipitation Forecast"
+DEFAULT_NAME = 'Buienradar Precipitation Forecast'
+DEFAULT_ICON = 'mdi:weather-pouring'
 
 CONF_URL  = 'url'
 ATTR_DATA = 'forecast'
@@ -38,11 +37,12 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Optional(CONF_URL, default='https://gpsgadget.buienradar.nl/data/raintext?lat=%s&lon=%s'): cv.string,
 })
 
-def setup_platform(hass: HomeAssistant, config: ConfigType, add_entities, discovery_info=None):
-    _LOGGER.debug('Setting up')
-    fname = config.get(CONF_NAME)
-    lat   = config.get(CONF_LATITUDE )
-    lon   = config.get(CONF_LONGITUDE)
+@asyncio.coroutine
+def async_setup_platform(hass, config, async_add_devices, discovery_info=None):
+    name = config.get(CONF_NAME)
+    lat  = config.get(CONF_LATITUDE )
+    lon  = config.get(CONF_LONGITUDE)
+    url  = config.get(CONF_URL)
 
     if None in (lat, lon):
       lat = config.get(CONF_LATITUDE , hass.config.latitude)
@@ -52,23 +52,64 @@ def setup_platform(hass: HomeAssistant, config: ConfigType, add_entities, discov
         _LOGGER.error("Latitude or longitude not set in HomeAssistant config")
         return
 
-    add_entities([RainForecastSensor(fname, lat,lon)])
+    async_add_devices([RainForecastSensor(hass, name, url, lat, lon)], update_before_add=True)
+
+async def async_get_rain_data(self): 
+    async with self._session.get(self._url % (self._lat, self._lon)) as response:
+        responseText = await response.text()
+
+    return responseText
 
 # ----------
 
 class RainForecastSensor(Entity):
 
-    def __init__(self, fname, lat, lon):
-        self._name = fname
-        self._lat = lat
-        self._lon = lon
-        self._url = "https://gpsgadget.buienradar.nl/data/raintext?lat=%s&lon=%s"
-        self._state = None
-        self._data = []
+    def __init__(self, hass, name, url, lat, lon):
+        self._name    = name
+        self._icon    = DEFAULT_ICON
+        self._lat     = lat
+        self._lon     = lon
+        self._url     = url
+        self._state   = None
+        self._data    = []
+        self._session = async_get_clientsession(hass)
+
+    async def async_update(self):
+        responseText = await async_get_rain_data(self)
+
+        if not responseText:
+            _LOGGER.error('API response error')
+        else:
+            total = 0.0
+            data  = []
+
+            lines = responseText.splitlines()
+
+            total = round( total, 2)
+
+            for line in lines:
+                raw_data, time = line.split("|")
+
+                time = datetime.today().strftime('%Y-%m-%d') + "T" + time + ":00"
+                # single rain entry = mm/h during 5 min
+                rain = round( 10 ** ((int( raw_data) - 109) / 32) / 12, 2)
+                total += rain
+
+                entry = {"time": time, "rain": rain}
+                data.append( entry)
+
+            self._state = round( total, 1)
+            self._data = data
+
+        # return self._state
 
     @property
     def name(self):
-        return 'Buienradar Precipitation Forecast'
+        return self._name
+
+    @property
+    def icon(self):
+        return self._icon
 
     @property
     def state(self):
@@ -92,7 +133,6 @@ class RainForecastSensor(Entity):
             CONF_NAME      : self._name,
             CONF_LATITUDE  : self._lat,
             CONF_LONGITUDE : self._lon,
-            CONF_URL       : self._url,
             ATTR_DATA      : self._data
         }
 
@@ -100,37 +140,3 @@ class RainForecastSensor(Entity):
     def unit_of_measurement(self):
         return "mm"
 
-    @Throttle(MIN_TIME_BETWEEN_UPDATES)
-    def update(self):
-        _LOGGER.debug('Updating')
-
-        try:
-            url = self._url % (self._lat, self._lon)
-            response = requests.get(self._url % (self._lat, self._lon))
-
-            if not response:
-                _LOGGER.error('API response error')
-            else:
-                total = 0.0
-                data  = []
-
-                lines = response.text.splitlines()
-
-                total = round( total, 2)
-
-                for line in lines:
-                    raw_data, time = line.split("|")
-                    time = datetime.today().strftime('%Y-%m-%d') + "T" + time + ":00"
-                    # single rain entry = mm/h during 5 min
-                    rain = round( 10 ** ((int( raw_data) - 109) / 32) / 12, 2)
-                    total += rain
-                    entry = {"time": time, "rain": rain}
-                    data.append( entry)
-
-                self._state = round( total, 1)
-                self._data = data
-
-        except requests.exceptions.RequestException as exc:
-            _LOGGER.error('Error %r', exc)
-            self._data = []
-            return False
