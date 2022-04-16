@@ -1,4 +1,3 @@
-"""Adds config flow for knmi."""
 from homeassistant import config_entries
 from homeassistant.const import CONF_NAME, CONF_LATITUDE, CONF_LONGITUDE
 from homeassistant.core import callback
