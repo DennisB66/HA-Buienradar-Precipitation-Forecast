@@ -24,8 +24,6 @@ class ForecastFlowHandler(data_entry_flow.FlowHandler):
         user_input[CONF_LATITUDE] = self.hass.config.latitude
         user_input[CONF_LONGITUDE] = self.hass.config.longitude
 
-        # return await self._show_config_form(user_input)
-
         data_schema = {
             vol.Required( CONF_NAME,      default=user_input[CONF_NAME]     ): str,
             vol.Required( CONF_LATITUDE,  default=user_input[CONF_LATITUDE] ): cv.latitude,

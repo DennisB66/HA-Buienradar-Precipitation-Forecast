@@ -22,20 +22,7 @@ SENSORS = [
         "name": "forecast",
         "icon": "mdi:rain",
         "unit_of_measurement": "mm",
-        "key" : "forec",
-    },
-    # {
-    #     "name": "Dauwpunt",
-    #     "unit_of_measurement": TEMP_CELSIUS,
-    #     "icon": "mdi:thermometer",
-    #     "key": "dauwp",
-    #     "device_class": DEVICE_CLASS_TEMPERATURE,
-    #     "attributes": [
-    #         {
-    #             "name": ATTR_STATE_CLASS,
-    #             "value": STATE_CLASS_MEASUREMENT,
-    #         },
-    #     ],
-    # },
+        "key" : "forecast",
+    }
 ]
 

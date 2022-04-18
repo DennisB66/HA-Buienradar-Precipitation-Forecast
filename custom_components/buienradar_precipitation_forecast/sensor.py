@@ -23,7 +23,7 @@ DEFAULT_SCAN_INTERVAL = timedelta(minutes=5)
 DEFAULT_NAME = 'Buienradar Precipitation Forecast'
 DEFAULT_ICON = 'mdi:weather-pouring'
 
-CONF_URL  = 'url'
+CONF_URL  = 'https://gpsgadget.buienradar.nl/data/raintext?lat=%s&lon=%s'
 ATTR_DATA = 'forecast'
 
 # ----------
@@ -33,8 +33,6 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
 
     vol.Inclusive(CONF_LATITUDE , "coordinates", "Latitude and longitude must exist together"): cv.latitude,
     vol.Inclusive(CONF_LONGITUDE, "coordinates", "Latitude and longitude must exist together"): cv.longitude,
-
-    vol.Optional(CONF_URL, default='https://gpsgadget.buienradar.nl/data/raintext?lat=%s&lon=%s'): cv.string,
 })
 
 @asyncio.coroutine
@@ -52,10 +50,10 @@ def async_setup_platform(hass, config, async_add_devices, discovery_info=None):
         _LOGGER.error("Latitude or longitude not set in HomeAssistant config")
         return
 
-    async_add_devices([RainForecastSensor(hass, name, url, lat, lon)], update_before_add=True)
+    async_add_devices([RainForecastSensor(hass, name, lat, lon)], update_before_add=True)
 
 async def async_get_rain_data(self): 
-    async with self._session.get(self._url % (self._lat, self._lon)) as response:
+    async with self._session.get(CONF_URL % (self._lat, self._lon)) as response:
         responseText = await response.text()
 
     return responseText
@@ -64,7 +62,7 @@ async def async_get_rain_data(self):
 
 class RainForecastSensor(Entity):
 
-    def __init__(self, hass, name, url, lat, lon):
+    def __init__(self, hass, name, lat, lon):
         self._name    = name
         self._icon    = DEFAULT_ICON
         self._lat     = lat
