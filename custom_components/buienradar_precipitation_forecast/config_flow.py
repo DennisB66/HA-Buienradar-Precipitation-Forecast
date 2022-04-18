@@ -30,4 +30,4 @@ class ForecastFlowHandler(data_entry_flow.FlowHandler):
             vol.Required( CONF_LONGITUDE, default=user_input[CONF_LONGITUDE]): cv.longitude,
         }
 
-        return self.async_show_form( step_id="init", data_schema=vol.Schema(data_schema), errors=errors)
+        return self.async_show_form( step_id="user", data_schema=vol.Schema(data_schema), errors=errors)
