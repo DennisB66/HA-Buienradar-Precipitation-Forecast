@@ -1,0 +1,24 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "Buienradar Precipitation Forecast",
+                "description": "",
+                "data": {
+                    "name": "Name",
+                    "latitude": "Latitude",
+                    "longitude": "Longitude"
+                }
+            }
+        }
+    },
+    "options": {
+        "step": {
+            "user": {
+                "data": {
+                    "sensor": "Sensor enabled"
+                }
+            }
+        }
+    }
+}

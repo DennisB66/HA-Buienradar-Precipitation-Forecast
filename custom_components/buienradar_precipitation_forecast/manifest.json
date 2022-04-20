@@ -1,11 +1,12 @@
 {
-  "domain": "buienradar_precipitation_forecast",
-  "name": "Buienradar Precipitation Forecast",
-  "version": "2022.04.08",
-  "iot_class": "cloud_polling",
-  "documentation": "https://github.com/DennisB66/HA-Buienradar-Precipitation-Forecast",
-  "issue_tracker": "https://github.com/DennisB66/HA-Buienradar-Precipitation-Forecast/issues",
-  "codeowners": ["@DennisB66"],
-  "dependencies": [],
-  "requirements": []
+    "domain": "buienradar_precipitation_forecast",
+    "name": "buienradar_precipitation_forecast",
+    "documentation": "https://github.com/custom-components/buienradar_precipitation_forecastt",
+    "iot_class": "cloud_polling",
+    "issue_tracker": "https://github.com/custom-components/buienradar_precipitation_forecast/issues",
+    "version": "0.0.0",
+    "config_flow": true,
+    "codeowners": [
+        "@DennisB66"
+    ]
 }
