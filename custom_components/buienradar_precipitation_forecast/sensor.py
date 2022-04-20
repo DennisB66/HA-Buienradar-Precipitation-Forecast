@@ -1,5 +1,5 @@
 from homeassistant.components.sensor import SensorEntity
-from homeassistant.const import ( CONF_NAME, CONF_LATITUDE, CONF_LONGITUDE )
+from homeassistant.const import CONF_NAME, CONF_LATITUDE, CONF_LONGITUDE
 
 from .const import DEFAULT_NAME, DEFAULT_ICON, DOMAIN, SENSOR
 from .entity import ForecastEntity
@@ -15,19 +15,19 @@ async def async_setup_entry(hass, entry, async_add_devices):
 
 
 class ForecastSensor(ForecastEntity, SensorEntity):
-
     def __init__(self, coordinator, entry):
         super().__init__(coordinator, entry)
 
         self._coordinator = coordinator
         self._entry = entry
 
-        self._name = entry.data.get(CONF_NAME)
-        self._lat  = entry.data.get(CONF_LATITUDE)
-        self._lon  = entry.data.get(CONF_LONGITUDE)
-        self._data = coordinator.data
-
         self._unique_id = entry.entry_id
+
+        self._name = entry.data.get(CONF_NAME)
+        self._lat = entry.data.get(CONF_LATITUDE)
+        self._lon = entry.data.get(CONF_LONGITUDE)
+
+        self._data = coordinator.data
 
     @property
     def name(self):
@@ -47,11 +47,11 @@ class ForecastSensor(ForecastEntity, SensorEntity):
 
     @property
     def state(self):
-        return self._data['total']
+        return self._data["total"]
 
     @property
     def forecast(self):
-        return self._data['list']
+        return self._data["list"]
 
     @property
     def unit_of_measurement(self):
@@ -60,10 +60,7 @@ class ForecastSensor(ForecastEntity, SensorEntity):
     @property
     def extra_state_attributes(self):
         return {
-            CONF_LATITUDE  : self._lat,
-            CONF_LONGITUDE : self._lon,
-            'forecast'     : self._data['list']
+            CONF_LATITUDE: self._lat,
+            CONF_LONGITUDE: self._lon,
+            "forecast": self._data["list"],
         }
-
-
-

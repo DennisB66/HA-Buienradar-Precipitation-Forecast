@@ -11,14 +11,5 @@
                 }
             }
         }
-    },
-    "options": {
-        "step": {
-            "user": {
-                "data": {
-                    "sensor": "Sensor enabled"
-                }
-            }
-        }
     }
 }
