@@ -1,9 +1,13 @@
+""" buienradar precipiation forecast: entity class """
+
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN, NAME, VERSION, ATTRIBUTION
 
 
 class ForecastEntity(CoordinatorEntity):
+    """ class to define entity """
+
     def __init__(self, coordinator, entry):
         super().__init__(coordinator)
         self.coordinator = coordinator

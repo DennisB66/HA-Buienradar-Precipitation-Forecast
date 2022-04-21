@@ -1,19 +1,26 @@
-from .const import API_URL
+""" buienradar precipiation forecast: API client """
 
 from datetime import datetime
-import aiohttp
+
 import logging
+import aiohttp
+
+from .const import API_URL
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 
 class ForecastApiClient:
+    """ class to implement API client """
+
     def __init__(self, lat, lon, session: aiohttp.ClientSession) -> None:
         self._lat = lat
         self._lon = lon
         self._session = session
 
     async def async_get_data(self):
+        """ fetch data from API (single rain entry = mm/h during 5 min) """
+
         async with self._session.get(API_URL % (self._lat, self._lon)) as response:
             response_text = await response.text()
 
@@ -23,7 +30,6 @@ class ForecastApiClient:
         total = 0.0
         _list = []
 
-        # single rain entry = mm/h during 5 min
         lines = response_text.splitlines()
 
         total = round(total, 2)

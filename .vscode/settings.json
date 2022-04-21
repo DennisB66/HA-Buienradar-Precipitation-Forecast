@@ -2,7 +2,7 @@
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
     "python.linting.pylintArgs": [
-        "--max-line-length=100"
+        "--max-line-length=120"
     ],
     "python.pythonPath": "/usr/local/bin/python",
     "files.associations": {
