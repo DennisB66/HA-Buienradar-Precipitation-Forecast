@@ -32,6 +32,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 
     lat = entry.data.get(CONF_LATITUDE)
     lon = entry.data.get(CONF_LONGITUDE)
+    # forecast_len = entry.data.get(CONF_?)
+    # histdata_len = entry.data.get(CONF_?)
 
     session = async_get_clientsession(hass)
     client = ForecastApiClient(lat, lon, session)
