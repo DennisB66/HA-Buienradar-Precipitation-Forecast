@@ -9,8 +9,8 @@ from .const import API_URL
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
-HISTDATA_LEN = 4
-FORECAST_LEN = 4
+HISTDATA_LEN = 24
+FORECAST_LEN = 24
 
 
 class ForecastApiClient:
