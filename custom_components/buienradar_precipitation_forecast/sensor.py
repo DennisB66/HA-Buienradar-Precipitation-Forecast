@@ -1,20 +1,26 @@
+""" buienradar precipiation forecast: sensor class """
+
+import logging
+
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.const import CONF_NAME, CONF_LATITUDE, CONF_LONGITUDE
 
-from .const import DEFAULT_NAME, DEFAULT_ICON, DOMAIN, SENSOR
+from .const import DEFAULT_NAME, DEFAULT_ICON, DOMAIN
 from .entity import ForecastEntity
-
-import logging
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 
 async def async_setup_entry(hass, entry, async_add_devices):
+    """ setup sensor platform """
+
     coordinator = hass.data[DOMAIN][entry.entry_id]
     async_add_devices([ForecastSensor(coordinator, entry)])
 
 
 class ForecastSensor(ForecastEntity, SensorEntity):
+    """ class to define sensor """
+
     def __init__(self, coordinator, entry):
         super().__init__(coordinator, entry)
 
