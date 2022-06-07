@@ -9,7 +9,7 @@ from .const import DEFAULT_NAME, DEFAULT_ICON, DOMAIN
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
-SCAN_INTERVAL = timedelta(seconds=10)
+SCAN_INTERVAL = timedelta(seconds=300)
 
 
 async def async_setup_entry(hass, entry, async_add_devices):
