@@ -1,20 +1,16 @@
-""" buienradar precipiation forecast: config_flow """
-
-import voluptuous as vol
-
 from homeassistant.const import CONF_NAME, CONF_LATITUDE, CONF_LONGITUDE
 from homeassistant import config_entries
 from homeassistant.helpers import config_validation as cv
 
-# from homeassistant.core import callback
+from .const import DOMAIN
 
-from .const import DOMAIN, PLATFORMS
+import voluptuous as vol
 
 
 class ForecastFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
-    """ config flow """
 
     VERSION = 1
+    CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
 
     def __init__(self):
         self._errors = {}
@@ -26,22 +22,27 @@ class ForecastFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         #     return self.async_abort(reason="single_instance_allowed")
 
         if user_input is None:
-            return await self._show_config_form()
+            user_input = {}
+            user_input[CONF_NAME] = self.hass.config.location_name
+            user_input[CONF_LATITUDE] = self.hass.config.latitude
+            user_input[CONF_LONGITUDE] = self.hass.config.longitude
 
-        # if not await self._is_valid():
-        #     return await self._show_config_form()
+            return await self._show_config_form(user_input)
+
+        if not await self._is_valid(user_input):
+            return await self._show_config_form(user_input)
 
         return self.async_create_entry(title=user_input[CONF_NAME], data=user_input)
 
-    async def _show_config_form(self):
+    async def _show_config_form(self, user_input):
         data_schema = vol.Schema(
             {
-                vol.Required(CONF_NAME, default=self.hass.config.location_name): str,
+                vol.Required(CONF_NAME, default=user_input[CONF_NAME]): str,
                 vol.Required(
-                    CONF_LATITUDE, default=self.hass.config.latitude
+                    CONF_LATITUDE, default=user_input[CONF_LATITUDE]
                 ): cv.latitude,
                 vol.Required(
-                    CONF_LONGITUDE, default=self.hass.config.longitude
+                    CONF_LONGITUDE, default=user_input[CONF_LONGITUDE]
                 ): cv.longitude,
             }
         )
@@ -50,37 +51,6 @@ class ForecastFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="user", data_schema=data_schema, errors=self._errors
         )
 
-    # @staticmethod
-    # @callback
-    # def async_get_options_flow(config_entry):
-    #     return ForecastOptionsFlowHandler(config_entry)
-
-
-class ForecastOptionsFlowHandler(config_entries.OptionsFlow):
-    """ options flow """
-
-    def __init__(self, config_entry):
-        self.config_entry = config_entry
-        self.options = dict(config_entry.options)
-
-    async def async_step_init(self, user_input=None):
-        return await self.async_step_user()
-
-    async def async_step_user(self, user_input=None):
-        if user_input is not None:
-            self.options.update(user_input)
-            return await self._update_options()
-
-        data_schema = vol.Schema(
-            {
-                vol.Required(x, default=self.options.get(x, True)): bool
-                for x in sorted(PLATFORMS)
-            }
-        )
-
-        return self.async_show_form(step_id="user", data_schema=data_schema)
-
-    async def _update_options(self):
-        return self.async_create_entry(
-            title=self.config_entry.data.get(CONF_NAME), data=self.options
-        )
+    async def _is_valid(self, user_input=None):
+        # todo: validate user input
+        return True
