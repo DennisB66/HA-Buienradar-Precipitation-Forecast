@@ -4,7 +4,7 @@
     "documentation": "https://github.com/custom-components/buienradar_precipitation_forecastt",
     "iot_class": "cloud_polling",
     "issue_tracker": "https://github.com/custom-components/buienradar_precipitation_forecast/issues",
-    "version": "0.0.0",
+    "version": "2022.06",
     "config_flow": true,
     "codeowners": [
         "@DennisB66"
