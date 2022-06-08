@@ -1,6 +1,6 @@
 {
-    "domain": "buienradar_precipitation_forecast",
-    "name": "buienradar_precipitation_forecast",
+    "domain": "buienradar_2h_forecast",
+    "name": "buienradar_2h_forecast",
     "documentation": "https://github.com/custom-components/buienradar_precipitation_forecastt",
     "iot_class": "cloud_polling",
     "issue_tracker": "https://github.com/custom-components/buienradar_precipitation_forecast/issues",
