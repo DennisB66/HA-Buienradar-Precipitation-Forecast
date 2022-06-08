@@ -2,7 +2,7 @@
     "config": {
         "step": {
             "user": {
-                "title": "Buienradar Precipitation Forecast",
+                "title": "Buienradar 2h Forecast",
                 "description": "",
                 "data": {
                     "name": "Name",

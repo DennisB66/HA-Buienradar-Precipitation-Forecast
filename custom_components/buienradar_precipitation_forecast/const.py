@@ -1,6 +1,6 @@
 # Base component constants
-NAME = "Buienradar Precipitation Forecast"
-DOMAIN = "buienradar_precipitation_forecast"
+NAME = "Buienradar 2h Forecast"
+DOMAIN = "buienradar_2h_forecast"
 DOMAIN_DATA = f"{DOMAIN}_data"
 VERSION = "2022.04.20"
 ATTRIBUTION = "Data provided by Buienradar"
