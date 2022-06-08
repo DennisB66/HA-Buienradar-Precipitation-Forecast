@@ -32,8 +32,8 @@ class ForecastApiClient:
             raw_data, time = line.split("|")
 
             time = datetime.today().strftime("%Y-%m-%d") + "T" + time + ":00"
-            rain = round(10 ** ((int(raw_data) - 109) / 32) / 12, 2)
-            total += rain
+            rain = round(10 ** ((int(raw_data) - 109) / 32), 2)
+            total += rain / 12
 
             entry = {"time": time, "rain": rain}
             _list.append(entry)
