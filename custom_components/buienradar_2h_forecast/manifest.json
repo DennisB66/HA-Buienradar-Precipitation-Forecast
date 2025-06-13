@@ -1,14 +1,13 @@
 {
-    
     "domain": "buienradar_2h_forecast",
     "name": "buienradar_2h_forecast",
     "documentation": "https://github.com/DennisB66/HA-Buienradar-Precipitation-Forecast",
     "iot_class": "cloud_polling",
     "issue_tracker": "https://github.com/DennisB66/HA-Buienradar-Precipitation-Forecast/issues",
-    "version": "2025.06",
+    "version": "2025.06.14",
     "config_flow": true,
     "codeowners": [
         "@DennisB66"
     ]
-
+    
 }
