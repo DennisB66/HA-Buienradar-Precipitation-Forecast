@@ -4,13 +4,12 @@
 Home Assistent integration to fetch the (2h) precipitation forecast from Buienradar (NL).
 
 ## Installation
-Install as a custom integration using HACS [(see this guide)](https://hacs.xyz/docs/faq/custom_repositories).
+(1) Install as a custom integration using HACS [(see this guide)](https://hacs.xyz/docs/faq/custom_repositories).
 
-For a manual install:
+(2) For a manual install:
 - download the integration from the [latest release](https://github.com/DennisB66/HA-Buienradar-Precipitation-Forecast/releases/).
 - copy the `Buienradar_2h_Forecast` directory into your /config/custom_components directory.
 - restart HA.
-
 
 In your HA installation the following should exist:
 ```text
@@ -19,16 +18,14 @@ custom_components/buienradar_2h_forecast/manifest.json
 custom_components/buienradar_2h_forecast/sensor.py
 ```
 
-<!-- ## Configuration
-Add the following to your configuration.yaml file and restart Home Assistant:
-```yaml
-sensor:
-  - platform: buienradar_precipitation_forecast
-``` -->
+In your Home Assistent UI go to "Settings/Devices & Services/Integrations", click "ADD INTEGRATION" and select "Buienradar_2h_Forecast". Default values for the config parameters will be populated in the config window. Change any paramter if needed and click "SUBMIT".
 
-## Sensor Parameters
-| Optional        | Values         | Description                                                   |
+Note: Addtional sensors (for other locationa) can be added with "ADD ENTRY" in the integration screen.
+
+## Config Parameters
+| Paramter        | Values         | Description                                                   |
 | --------------- | -------------- | ------------------------------------------------------------- |
+| `Name`          | string         | Location name of the sensor (default "home")                  |
 | `latitude`      | number         | Latitude coordinate of the forecast requested                 |
 | `longitude`     | number         | Longitude coordinate of the forecast requested                |
 
