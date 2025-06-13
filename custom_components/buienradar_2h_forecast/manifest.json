@@ -1,4 +1,5 @@
 {
+    
     "domain": "buienradar_2h_forecast",
     "name": "buienradar_2h_forecast",
     "documentation": "https://github.com/DennisB66/HA-Buienradar-Precipitation-Forecast",
@@ -9,4 +10,5 @@
     "codeowners": [
         "@DennisB66"
     ]
+
 }
