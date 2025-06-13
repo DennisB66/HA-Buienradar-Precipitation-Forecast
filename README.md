@@ -8,7 +8,7 @@ Install as a custom integration using HACS [(see this guide)](https://hacs.xyz/d
 
 For a manual install:
 - download the integration from the [latest release](https://github.com/DennisB66/HA-Buienradar-Precipitation-Forecast/releases/).
-- copy the `Buienradar-Precipitation-Forecast` directory into your /config/custom_components directory.
+- copy the `Buienradar_2h_Forecast` directory into your /config/custom_components directory.
 - restart HA.
 
 
