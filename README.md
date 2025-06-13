@@ -4,27 +4,27 @@
 Home Assistent integration to fetch the (2h) precipitation forecast from Buienradar (NL).
 
 ## Installation
-Install as a custom integration using HACS [(see this guide)](https://hacs.xyz/docs/faq/custom_repositoriess).
+Install as a custom integration using HACS [(see this guide)](https://hacs.xyz/docs/faq/custom_repositories).
 
 For a manual install:
 - download the integration from the [latest release](https://github.com/DennisB66/HA-Buienradar-Precipitation-Forecast/releases/).
-- copy the `Buienradar-Precipitation-Forecast` directory into your /config/custom_components directory.
+- copy the `Buienradar_2h_Forecast` directory into your /config/custom_components directory.
 - restart HA.
 
 
 In your HA installation the following should exist:
 ```text
-custom_components/buienradar_precipitation_forecast/__init__.py
-custom_components/buienradar_precipitation_forecast/manifest.json
-custom_components/buienradar_precipitation_forecast/sensor.py
+custom_components/buienradar_2h_forecast/__init__.py
+custom_components/buienradar_2h_forecast/manifest.json
+custom_components/buienradar_2h_forecast/sensor.py
 ```
 
-## Configuration
+<!-- ## Configuration
 Add the following to your configuration.yaml file and restart Home Assistant:
 ```yaml
 sensor:
   - platform: buienradar_precipitation_forecast
-```
+``` -->
 
 ## Sensor Parameters
 | Optional        | Values         | Description                                                   |
@@ -57,7 +57,7 @@ apex_config:
   dataLabels:
     enabled: true
 header:
-  title: Buienradar Precipitation Forecast
+  title: Buienradar 2h Forecast
   show: true
   show_states: true
   colorize_states: false
@@ -66,7 +66,7 @@ now:
   show: true
   label: now
 series:
-  - entity: sensor.buienradar_precipitation_forecast
+  - entity: sensor.sensor.buienradar_2h_forecast_home
     name: total (2h)
     type: column
     color: blue
